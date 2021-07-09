@@ -4,12 +4,12 @@ module.exports = (phase, { defaultConfig }) => {
     if (phase === PHASE_DEVELOPMENT_SERVER) {
         return {
             /* development only config options here */
-            'server': 'https://raw.sivir.pw',
+            server: 'https://raw.sivir.pw'
         }
     }
 
     return {
         /* config options for all phases except development here */
-        'server': 'https://raw.sivir.pw',
+        server: 'https://raw.sivir.pw'
     }
 }

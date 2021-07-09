@@ -44,10 +44,8 @@ function Projects({data}) {
     )
 }
 
-const config = require('../config.js')
-
 export async function getStaticProps() {
-    const url = config['server'] + "project/list.json"
+    const url = 'https://raw.sivir.pw/' + "project/list.json"
     const res = await fetch(url)
     const data = await res.json()
 
