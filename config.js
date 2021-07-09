@@ -1,3 +1,15 @@
-const dev = process.env.NODE_ENV !== 'production';
+const { PHASE_DEVELOPMENT_SERVER } = require('next/constants')
 
-module.exports.server = dev ? 'https://raw.sivir.pw/' : 'https://raw.sivir.pw/';
+module.exports = (phase, { defaultConfig }) => {
+    if (phase === PHASE_DEVELOPMENT_SERVER) {
+        return {
+            /* development only config options here */
+            'server': 'https://raw.sivir.pw',
+        }
+    }
+
+    return {
+        /* config options for all phases except development here */
+        'server': 'https://raw.sivir.pw',
+    }
+}
