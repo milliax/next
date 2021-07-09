@@ -2,8 +2,9 @@ import Head from "next/head";
 import Link from "next/link";
 import Nav from '../components/nav'
 import Focus from "../components/focussection";
+import {server} from '../next.config'
 
-function Projects({posts}) {
+function Projects({data}) {
     return (
         <div className={"Projects"}>
             <Head>
@@ -28,8 +29,7 @@ function Projects({posts}) {
                 <div className="wrapper">
                     <div className="inner">
                         <section className="features">
-                            {posts.map((data) => {
-                                console.log(posts)
+                            {data && data.map((data) => {
                                 return (
                                     <Focus picture={typeof(data.picture) !== "undefined"? data.picture:"https://raw.sivir.pw/public/images/pic04.jpg"}
                                            title={data.title}
@@ -46,18 +46,12 @@ function Projects({posts}) {
 }
 
 export async function getStaticProps() {
-    const url = process.env.DB_HOST + "project/list.json"
-    const res = await fetch(url, {
-        method: 'GET',
-        headers: {
-            'Accept': 'application/json'
-        }
-    })
-    const posts = await res.json()
+    const url = server + "project/list.json"
+    const res = await fetch(url)
+    const data = await res.json()
+
     return {
-        props: {
-            posts
-        }
+        props: { data }
     }
 }
 
