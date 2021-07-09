@@ -2,7 +2,6 @@ import Head from "next/head";
 import Link from "next/link";
 import Nav from '../components/nav'
 import Focus from "../components/focussection";
-import {server} from '../next.config'
 
 function Projects({data}) {
     return (
@@ -45,8 +44,10 @@ function Projects({data}) {
     )
 }
 
+const config = require('../config.js')
+
 export async function getStaticProps() {
-    const url = server + "project/list.json"
+    const url = config.server + "project/list.json"
     const res = await fetch(url)
     const data = await res.json()
 
