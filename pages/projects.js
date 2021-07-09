@@ -46,7 +46,7 @@ function Projects({posts}) {
 }
 
 export async function getStaticProps() {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_ENDPOINT}project/list.json`, {
+    const res = await fetch(`${process.env.DB_HOST}project/list.json`, {
         method: 'GET',
         headers: {
             'Accept': 'application/json'
