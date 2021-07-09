@@ -45,11 +45,7 @@ function Projects({data}) {
 }
 
 export async function getStaticProps() {
-    const db = await myDB.connect({
-        host: process.env.DB_HOST
-    })
-
-    const res = await fetch(`${db.host}project/list.json`)
+    const res = await fetch(`${process.env.NEXT_PUBLIC_ENDPOINT}project/list.json`)
     const data = await res.json()
 
     return {
