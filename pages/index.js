@@ -26,7 +26,7 @@ export default function Home() {
                 <section id="wrapper">
                     <Spotlight1 link={"/projects"}
                                 title={"projects"}
-                                context={"these are my projects"}
+                                context={"The followings are my projects"}
                                 picture="https://raw.sivir.pw/public/images/pic01.jpg"/>
 
                     <Spotlight2 link={"/tutorials"}
