@@ -1,5 +1,5 @@
 import {useState} from 'react'
-
+import Image from 'next/image'
 export default function Footer(props){
     const [name,setName] = useState('')
     const [email,setEmail] = useState('')
@@ -59,6 +59,7 @@ export default function Footer(props){
                     <li>&copy; Untitled Inc. All rights reserved.</li>
                     <li>Design: <a href="http://html5up.net" rel="noreferrer noopener" target='_blank'>HTML5 UP</a></li>
                     <li>Construct: Milliax</li>
+                    <li>Powered by <span><Image src={"/vercel.svg"} alt={"Vercel Logo"} width={90} height={20} /></span></li>
                 </ul>
             </div>
         </section>
