@@ -1,21 +1,16 @@
-import Head from 'next/head'
 import Link from 'next/link'
 import Nav from '../components/nav'
-import Footer from '../components/footer'
 import HomeTitle from "../components/homeTitle";
 import Banner from "../components/banner";
 import Spotlight1 from "../components/spotlights/spotlight1";
 import Spotlight2 from "../components/spotlights/spotlight3";
 import Focus from "../components/focussection";
 
-export default function Home() {
+function Home({projects}) {
     const focusTitle = "collection"
     const focusContext = "descriptions"
     return (
         <div className={'Home'}>
-            <Head>
-
-            </Head>
 
             <div id="page-wrapper">
                 <HomeTitle/>
@@ -27,22 +22,29 @@ export default function Home() {
                     <Spotlight1 link={"/projects"}
                                 title={"projects"}
                                 context={"The followings are my projects"}
-                                picture="https://raw.sivir.pw/public/images/pic01.jpg"/>
+                                picture="https://raw.sivir.pw/public/images/pic01.jpg"
+                                key={"projects"}/>
 
                     <Spotlight2 link={"/tutorials"}
                                 title={"tutorials"}
                                 context={"During my self-studying time.\nI realized that if someone writes a tutorial in advance, then we can learn things more efficient and correct."}
-                                picture="https://raw.sivir.pw/public/images/pic02.jpg"/>
+                                picture="https://raw.sivir.pw/public/images/pic02.jpg"
+                                key={"tutorials"}/>
 
                     <section className="wrapper alt style1">
                         <div className="inner">
                         <h2 className="major">{focusTitle}</h2>
                         <p>{focusContext}</p>
                         <section className="features">
-                            <Focus picture="https://raw.sivir.pw/public/images/pic05.jpg"
-                                   title={"電動窗簾"}
-                                   context={"利用Raspberry Pi、Google Home、IFTTT串接的自動窗簾"}
-                                   link={"https://sivir.pw"}/>
+                            {projects.slice(0,4).map((data)=>{
+                                return(
+                                    <Focus picture={data.picture}
+                                           title={data.title}
+                                           context={data.context}
+                                           link={`/post/${data.link}`}
+                                           key={data.title}/>
+                                )
+                            })}
                         </section>
                         <ul className="actions">
                             <li><Link href="/posts" className="button">Browse All</Link></li>
@@ -54,3 +56,14 @@ export default function Home() {
         </div>
     )
 }
+
+export async function getStaticProps() {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_ENDPOINT}project/list.json`)
+    const projects = await res.json()
+
+    return {
+        props: { projects }
+    }
+}
+
+export default Home

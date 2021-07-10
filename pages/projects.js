@@ -30,10 +30,11 @@ function Projects({data}) {
                         <section className="features">
                             {data && data.map((data) => {
                                 return (
-                                    <Focus picture={typeof(data.picture) !== "undefined"? data.picture:"https://raw.sivir.pw/public/images/pic04.jpg"}
+                                    <Focus picture={data.picture}
                                            title={data.title}
                                            context={data.context}
-                                           link={`project/${data.link}`}/>
+                                           link={`project/${data.link}`}
+                                           key={data.title}/>
                                 )
                             })}
                         </section>
