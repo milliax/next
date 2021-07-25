@@ -1,65 +1,69 @@
-import Head from 'next/head'
-import styles from '../styles/Home.module.css'
+import Link from 'next/link'
+import Nav from '../components/nav'
+import HomeTitle from "../components/homeTitle";
+import Banner from "../components/banner";
+import Spotlight1 from "../components/spotlights/spotlight1";
+import Spotlight2 from "../components/spotlights/spotlight3";
+import Focus from "../components/focussection";
 
-export default function Home() {
-  return (
-    <div className={styles.container}>
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+function Home({projects}) {
+    const focusTitle = "collection"
+    const focusContext = "descriptions"
+    return (
+        <div className={'Home'}>
 
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
+            <div id="page-wrapper">
+                <HomeTitle/>
+                <Nav/>
+                <Banner title={"I am Milliax"}
+                        context={"oh I don' t know what to say \n below are some of my projects"}/>
 
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
+                <section id="wrapper">
+                    <Spotlight1 link={"/projects"}
+                                title={"projects"}
+                                context={"The followings are my projects"}
+                                picture="https://raw.sivir.pw/public/images/pic01.jpg"
+                                key={"projects"}/>
 
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
+                    <Spotlight2 link={"/tutorials"}
+                                title={"tutorials"}
+                                context={"During my self-studying time.\nI realized that if someone writes a tutorial in advance, then we can learn things more efficient and correct."}
+                                picture="https://raw.sivir.pw/public/images/pic02.jpg"
+                                key={"tutorials"}/>
 
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
+                    <section className="wrapper alt style1">
+                        <div className="inner">
+                        <h2 className="major">{focusTitle}</h2>
+                        <p>{focusContext}</p>
+                        <section className="features">
+                            {projects.slice(0,4).map((data)=>{
+                                return(
+                                    <Focus picture={data.picture}
+                                           title={data.title}
+                                           context={data.context}
+                                           link={`/post/${data.link}`}
+                                           key={data.title}/>
+                                )
+                            })}
+                        </section>
+                        <ul className="actions">
+                            <li><Link href="/posts" className="button">Browse All</Link></li>
+                        </ul>
+                        </div>
+                    </section>
+                </section>
+            </div>
         </div>
-      </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
-    </div>
-  )
+    )
 }
+
+export async function getStaticProps() {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_ENDPOINT}project/list.json`)
+    const projects = await res.json()
+
+    return {
+        props: { projects }
+    }
+}
+
+export default Home
