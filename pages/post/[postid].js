@@ -1,4 +1,5 @@
 import ListContext from '../../components/ListContext'
+import Title from '../../components/Title'
 
 export default function Post({posts}){
     
@@ -21,7 +22,7 @@ export default function Post({posts}){
                                     <h3 class="major">{data.title}</h3>}
                                 <p>
                                     <ListContext context={data.context} 
-                                        posts={posts}/>
+                                        additionals={posts.additionals}/>
                                 </p>
                             </div>
                         ))}
@@ -34,7 +35,7 @@ export default function Post({posts}){
 
 export async function getStaticProps({ params }) {
     const postId = params.postid
-    const res = await fetch(`${process.env.NEXT_PUBLIC_ENDPOINT}/post/${postId}`)
+    const res = await fetch(`${process.env.NEXT_PUBLIC_ENDPOINT}/post/${postId}/zh-tw.json`)
     const posts = await res.json()
     return{
         props: {
@@ -46,9 +47,9 @@ export async function getStaticProps({ params }) {
 export async function getStaticPaths() {
     const res = await fetch(`${process.env.NEXT_PUBLIC_ENDPOINT}post/lists.json`)
     const data = await res.json()
-
+    console.log(data)
     const paths = data.map((item)=>(`/post/${item.link}`))
-
+    console.log(paths)
     return {
         paths,
         fallback: false

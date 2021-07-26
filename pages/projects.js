@@ -1,21 +1,10 @@
-import Head from "next/head";
-import Link from "next/link";
-import Nav from '../components/nav'
+import Title from '../components/Title'
 import Focus from "../components/focussection";
 
 function Projects({data}) {
     return (
         <div className={"Projects"}>
-            <Head>
-                <title key={"title"}>Projects</title>
-            </Head>
-            <header id="header">
-                <h1><Link href={"/"}>Home</Link></h1>
-                <nav>
-                    <a href="#menu">Menu</a>
-                </nav>
-            </header>
-            <Nav/>
+            <Title title="Projects"/>
 
             <section id="wrapper">
                 <header>

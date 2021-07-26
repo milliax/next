@@ -61,7 +61,6 @@ export async function getStaticPaths() {
             paths.push(routes)
         }
     }
-    console.log(paths)
 
     return {
         paths,
