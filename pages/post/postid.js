@@ -1,8 +1,8 @@
-import Title from '../../../components/Title.js'
-import ListContext from '../../../components/ListContext.js'
+import ListContext from '../../components/ListContext'
 
-export default function Tutorial({ posts }) {
-    return (
+export default function Post({posts}){
+    
+    return(
         <div>
             <Title title={`${typeof (posts.title) !== "undefined" && posts.title}`} />
 
@@ -20,7 +20,7 @@ export default function Tutorial({ posts }) {
                                 <h3 class="major">{data.title}</h3>
                                 <p>
                                     <ListContext context={data.context} 
-                                        additionals={posts.additionals}/>
+                                        posts={posts}/>
                                 </p>
                             </div>
                         ))}
@@ -32,36 +32,21 @@ export default function Tutorial({ posts }) {
 }
 
 export async function getStaticProps({ params }) {
-    const lesson = params.lesson
-    const course = params.course
-    const res = await fetch(`${process.env.NEXT_PUBLIC_ENDPOINT}tutorial/${course}/${lesson}.json`)
+    const postId = params.postid
+    const res = await fetch(`${process.env.NEXT_PUBLIC_ENDPOINT}/post/${postId}`)
     const posts = await res.json()
-    return {
+    return{
         props: {
             posts
         }
     }
 }
 
-async function getProperPath(course) {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_ENDPOINT}tutorial/${course}/outline.json`)
-    const data = await res.json()
-    return data.map((item) => (`/tutorial/${course}/${item.link}`))
-}
-
 export async function getStaticPaths() {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_ENDPOINT}tutorial/list.json`)
+    const res = await fetch(`${process.env.NEXT_PUBLIC_ENDPOINT}post/lists.json`)
     const data = await res.json()
 
-    const rawPath = data.map((data) => (getProperPath(data.link)))
-    const tempPaths = await Promise.all(rawPath)
-    let paths = []
-    for (let item of tempPaths) {
-        for (let routes of item) {
-            paths.push(routes)
-        }
-    }
-    console.log(paths)
+    const paths = data.map((item)=>(`/post/${item.link}`))
 
     return {
         paths,
