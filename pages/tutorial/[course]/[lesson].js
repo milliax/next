@@ -2,50 +2,95 @@ import Title from '../../../components/Title.js'
 
 export default function Tutorial({ posts }) {
 
-    function listContext(context, index) {
+    function listContext(context) {
         // parse photo
-        const fragment = context.split('{{photo}}')
-        return fragment.map((item, index2) => {
-            console.log(item)
-            return(
+        const fragment = context.split('\n')
+        return fragment.map((item) => {
+            return (
                 <>
-                    {item}
-                    {typeof (posts['photo'][index]) !== "undefined" &&
-                        typeof (posts['photo'][index][index2]) !== "undefined" &&
-                        <>
-                            <img src={posts['photo'][index][index2]}/>
-                        </>}
+                    {specialParse(item)}
+                    <br />
                 </>
             )
         })
-}
+    }
+    function specialParse(context) {
+        const fragment = context.split('/^')
+        return fragment.map((text) => {
+            if (typeof (posts['additionals'][text]) === "undefined") {
+                return (
+                    <>
+                        {text}
+                    </>
+                )
+            } else {
+                const part = posts['additionals'][text]
+                console.log(part)
+                switch (part.type) {
+                    case "photo":
+                        return (
+                            <>
+                                {typeof (part.height) === "undefined" ?
+                                    <img src={part.link}
+                                        alt={part.alt} />
+                                    :
+                                    <img src={part.link}
+                                        height={part.height}
+                                        width={part.width}
+                                        alt={part.alt} />
+                                }
 
-return (
-    <div>
-        <Title title={`${posts.title}`} />
+                            </>
+                        )
+                    case "code":
+                        return (
+                            <>
+                                <pre>
+                                    <code>
+                                        {part.text}
+                                    </code>
+                                </pre>
+                            </>
+                        )
+                    case "link":
+                        return(
+                            <>
+                                <a href={part.link}>
+                                  {part.text}  
+                                </a>
+                            </>
+                        )
+                }
+            }
+        })
+    }
 
-        <section id="wrapper">
-            <header>
-                <div className="inner">
-                    <h2>{posts.title}</h2>
-                    <p>{posts.context}</p>
+    return (
+        <div>
+            <Title title={`${typeof (posts.title) !== "undefined" && posts.title}`} />
+
+            <section id="wrapper">
+                <header>
+                    <div className="inner">
+                        <h2>{typeof (posts.title) !== "undefined" && posts.title}</h2>
+                        <p>{typeof (posts.context) !== "undefined" && posts.context}</p>
+                    </div>
+                </header>
+                <div className="wrapper">
+                    <div className="inner">
+                        {typeof (posts['p']) !== "undefined" && posts['p'].map((data, index) => (
+                            <div key={data.title}>
+                                <h3 class="major">{data.title}</h3>
+                                <p>
+                                    {listContext(data.context)}
+                                </p>
+                            </div>
+                        ))}
+                    </div>
                 </div>
-            </header>
-            <div className="wrapper">
-                <div className="inner">
-                    {posts['p'].map((data, index) => (
-                        <div key={data.title}>
-                            <h3 class="major">{data.title}</h3>
-                            <p>
-                                {listContext(data.context, index)}
-                            </p>
-                        </div>
-                    ))}
-                </div>
-            </div>
-        </section>
-    </div>
-)
+            </section>
+        </div>
+    )
 }
 
 export async function getStaticProps({ params }) {
