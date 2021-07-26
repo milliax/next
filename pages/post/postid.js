@@ -16,8 +16,9 @@ export default function Post({posts}){
                 <div className="wrapper">
                     <div className="inner">
                         {typeof (posts['p']) !== "undefined" && posts['p'].map((data, index) => (
-                            <div key={data.title}>
-                                <h3 class="major">{data.title}</h3>
+                            <div key={index}>
+                                {typeof(data.title) !== "undefined" &&
+                                    <h3 class="major">{data.title}</h3>}
                                 <p>
                                     <ListContext context={data.context} 
                                         posts={posts}/>
