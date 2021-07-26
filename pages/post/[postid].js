@@ -1,8 +1,9 @@
-import Title from '../../../components/Title.js'
-import ListContext from '../../../components/ListContext.js'
+import ListContext from '../../components/ListContext'
+import Title from '../../components/Title'
 
-export default function Tutorial({ posts }) {
-    return (
+export default function Post({posts}){
+    
+    return(
         <div>
             <Title title={`${typeof (posts.title) !== "undefined" && posts.title}`} />
 
@@ -16,8 +17,9 @@ export default function Tutorial({ posts }) {
                 <div className="wrapper">
                     <div className="inner">
                         {typeof (posts['p']) !== "undefined" && posts['p'].map((data, index) => (
-                            <div key={data.title}>
-                                <h3 class="major">{data.title}</h3>
+                            <div key={index}>
+                                {typeof(data.title) !== "undefined" &&
+                                    <h3 class="major">{data.title}</h3>}
                                 <p>
                                     <ListContext context={data.context} 
                                         additionals={posts.additionals}/>
@@ -32,36 +34,22 @@ export default function Tutorial({ posts }) {
 }
 
 export async function getStaticProps({ params }) {
-    const lesson = params.lesson
-    const course = params.course
-    const res = await fetch(`${process.env.NEXT_PUBLIC_ENDPOINT}tutorial/${course}/${lesson}.json`)
+    const postId = params.postid
+    const res = await fetch(`${process.env.NEXT_PUBLIC_ENDPOINT}/post/${postId}/zh-tw.json`)
     const posts = await res.json()
-    return {
+    return{
         props: {
             posts
         }
     }
 }
 
-async function getProperPath(course) {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_ENDPOINT}tutorial/${course}/outline.json`)
-    const data = await res.json()
-    return data.map((item) => (`/tutorial/${course}/${item.link}`))
-}
-
 export async function getStaticPaths() {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_ENDPOINT}tutorial/list.json`)
+    const res = await fetch(`${process.env.NEXT_PUBLIC_ENDPOINT}post/lists.json`)
     const data = await res.json()
-
-    const rawPath = data.map((data) => (getProperPath(data.link)))
-    const tempPaths = await Promise.all(rawPath)
-    let paths = []
-    for (let item of tempPaths) {
-        for (let routes of item) {
-            paths.push(routes)
-        }
-    }
-
+    console.log(data)
+    const paths = data.map((item)=>(`/post/${item.link}`))
+    console.log(paths)
     return {
         paths,
         fallback: false
