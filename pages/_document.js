@@ -30,7 +30,7 @@ export default class MyDocument extends Document {
 
                     <link rel='icon' type='image/png' sizes='32x32' href='/static/icons/favicon-32x32.png' />
                     <link rel='icon' type='image/png' sizes='16x16' href='/static/icons/favicon-16x16.png' />
-                    <link rel='manifest' href='/static/manifest.json' />
+                    <link rel='manifest' href='/manifest.json' />
                     <link rel='mask-icon' href='/static/icons/safari-pinned-tab.svg' color='#5bbad5' />
                     <link rel='shortcut icon' href='/favicon.ico' />
                     <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto:300,400,500' />
