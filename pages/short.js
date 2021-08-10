@@ -3,7 +3,7 @@ import { useState } from 'react'
 import Swal from 'sweetalert2'
 import QRCode from 'qrcode.react'
 
-export default function Tutorials() {
+export default function Short() {
     const [url, setUrl] = useState('')
     const [token, setToken] = useState('')
     const [testing, setTesting] = useState(false)
