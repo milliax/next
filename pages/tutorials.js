@@ -1,7 +1,5 @@
 import {useState,useEffect} from 'react'
-import Head from 'next/head'
-import Nav from '../components/nav'
-import Link from "next/link";
+import Title from '../components/Title'
 import Focus from '../components/focussection'
 
 export default function Tutorials(){
@@ -23,17 +21,7 @@ export default function Tutorials(){
     },[])
     return(
         <div className={"Tutorials"}>
-            <Head>
-                <title key={"title"}>Tutorials</title>
-            </Head>
-
-            <header id="header">
-                <h1><Link href={"/"}>Home</Link></h1>
-                <nav>
-                    <a href="#menu">Menu</a>
-                </nav>
-            </header>
-            <Nav />
+            <Title title="Tutorials"/>
 
             <section id="wrapper">
                 <header>

@@ -8,11 +8,14 @@
     "start": "next start"
   },
   "dependencies": {
+    "@material-ui/core": "^4.12.3",
     "gray-matter": "^4.0.3",
     "next": "10.x",
     "next-pwa": "^5.2.23",
     "next-sitemap": "^1.6.140",
+    "qrcode.react": "^1.0.1",
     "react": "17.x",
-    "react-dom": "17.x"
+    "react-dom": "17.x",
+    "sweetalert2": "^11.1.1"
   }
 }

@@ -1,7 +1,7 @@
 import Link from "next/link";
 
-export default function Nav(){
-    return(
+export default function Nav() {
+    return (
         <nav id="menu">
             <div className="inner">
                 <h2>Menu</h2>
@@ -10,6 +10,7 @@ export default function Nav(){
                     <li><Link href="/tutorials">Tutorials</Link></li>
                     <li><Link href="/projects">Projects</Link></li>
                     <li><Link href="/posts">Posts</Link></li>
+                    <li><Link href="/tools">Tools</Link></li>
                 </ul>
                 <a href="#" className="close">Close</a>
             </div>
