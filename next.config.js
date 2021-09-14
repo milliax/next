@@ -8,5 +8,11 @@ module.exports = withPWA({
         disable: !prod,
         runtimeCaching
     },
-    webpack5: true
+    webpack5: true,
+    images: {
+        domains:[
+            "lh3.googleusercontent.com",
+            "raw.sivir.pw"
+        ]
+    }
 })
